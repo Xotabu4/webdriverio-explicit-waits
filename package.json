@@ -1,9 +1,13 @@
 {
   "name": "webdriverio-explicit-waits",
-  "version": "1.0.0",
-  "description": "WebdriverIO explicit waits to be more flexible",
+  "version": "1.0.1",
+  "description": "library that allows to wait for elements in webdriverio, not just string locators",
   "main": "index.js",
   "types": "index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Xotabu4/webdriverio-explicit-waits.git"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
