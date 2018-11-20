@@ -1,6 +1,6 @@
 {
   "name": "webdriverio-explicit-waits",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "library that allows to wait for elements in webdriverio, not just string locators",
   "main": "index.js",
   "types": "index.d.ts",
