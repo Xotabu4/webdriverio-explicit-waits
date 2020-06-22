@@ -1,72 +1,74 @@
 # webdriverio-explicit-waits
 
+### Old-style collection of wait predicates for WebdriverIO. Will be convinient for people that pefer ExpectedConditions syntax
+
+#### :warning: Currently for WebdriverIO SYNC mode only!
 
 
-### Simple library that allows to wait for elements in webdriverio, not just string locators
+## Quick start
 
+### Installing
 
-```javascript
-const { waitFor, ExpectedConditions } = require('webdriverio-explicit-waits')
-const EC = ExpectedConditions
-
-waitFor(EC.visibilityOf(()=> $('div.someClass')), 2000)
+```
+npm i webdriverio-explicit-waits --save-dev
 ```
 
+### Importing
 
-Originaly, webdriverIO does not support lazy elements pattern, so in PageObjects you need to write like this:
+```javascript
+const { ExpectedConditions } = require('webdriverio-explicit-waits')
+// Or, the same:
+const { EC } = require('webdriverio-explicit-waits')
+```
 
+### Using
 
+If you prerer style of pageobjects, where elements are in getter functions, make sure you are not calling getter function (wrap it into antoher function):
 ```javascript
 class SomePageObject {
     get header() {
         return $('header')
     }
 }
+const page = new SomePageObject()
+browser.waitUntil(EC.visibilityOf(() => page.header));
 ```
 
-But this brings a problems when you want to wait for some element conditions:
-
+If your elements wrapped into regular functions, you don't need to wrap them additionaly:
 ```javascript
-let somepage = new SomePageObject()
-browser.waitForVisible(somepage.header) // ERROR! WebdriverIO accepts only strings in explicit wait methods!
-```
-
-So here is this lib comes:
-```javascript
-waitFor(EC.visibilityOf(somepage.header), 2000)
-```
-
-Another problem, even if you don't use getters, and store all your locators in strings,
-sometimes you have containers, and you want to search your elements inside them:
-
-```javascript
-class SearchResults {
-    container = 'div.container.searchresults'
-    results = 'ul>li.result'
-    title = '.title'
-    description = '.description'
+class SomePageObject {
+    header() {
+        return $('header')
+    }
 }
+const page = new SomePageObject()
+browser.waitUntil(EC.visibilityOf(page.header));
 ```
 
-So if you want to wait for visible title in result number 5 (just example):
+If you just store locators, you can pass string into predicate function, this string will be considered a locator. All webdriverio locators supported:
 
 ```javascript
-let searchRes = new SearchResults()
-
-waitFor(EC.visibilityOf(()=> {
-    return $(searchRes.container).$$(searchRes.results)[5].$(searchRes.title)
-    }), 2000)
+class SomePageObject {
+    constructor() {
+        this.header = 'header'
+    }
+}
+const page = new SomePageObject()
+browser.waitUntil(EC.visibilityOf(page.header)); // string is fine too!
 ```
 
-And even easier with getters:
+
+## Going deeper
+
+### Passing wait params
+
+Same set params as in webdriverio accepted (https://webdriver.io/docs/api/browser/waitUntil.html#parameters):
 ```javascript
-let searchRes = new SearchResults()
-
-waitFor(EC.visibilityOf(()=> searchRes.results(5).title), 2000, 'Result number 5 should have visible title')
+browser.waitUntil(EC.visibilityOf('header'), { timeout, timeoutMsg, interval });
 ```
-- EC.visibilityOf
-- EC.invisibilityOf
-- EC.textToBe // check element contains text
-- EC.not // flip boolean result of condition
 
-TODO: List of methods and extend with more conditions
+### API
+
+
+Must read:
+https://webdriver.io/docs/api/browser/waitUntil.html

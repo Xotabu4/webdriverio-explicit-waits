@@ -1,9 +1,8 @@
 {
   "name": "webdriverio-explicit-waits",
-  "version": "1.0.2",
-  "description": "library that allows to wait for elements in webdriverio, not just string locators",
+  "version": "2.0.0",
+  "description": "More convinient waits for webdriverIO for people that pefer ExpectedConditions syntax",
   "main": "index.js",
-  "types": "index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Xotabu4/webdriverio-explicit-waits.git"
@@ -12,5 +11,8 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Oleksandr Khotemskyi <xotabu4@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "peerDependencies": {
+    "@wdio/sync": "6.0.0^"
+  }
 }
